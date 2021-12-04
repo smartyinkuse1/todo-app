@@ -1,0 +1,39 @@
+<div class="container">
+  <form #blogForm="ngForm" class="w-50" (ngSubmit)="onSubmit(blogForm)">
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Name</label>
+      <input type="text" #name="ngModel" name="name" required class="form-control" id="exampleFormControlInput1" placeholder="Enter name" ngModel>
+      <span *ngIf="name.invalid && name.touched" style="color: red;">name is required</span>
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Background Image</label>
+      <input id="file" type="file" required (change)="onFileClicked($event)" >
+      <img *ngIf="imagePreview" [src]="imagePreview" width="400" height="200" class="mt-2" alt="">
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea2" class="form-label">Description</label>
+      <textarea name="description" #description="ngModel" minlength="10" maxlength="30" class="form-control" id="exampleFormControlTextarea2" rows="3" ngModel></textarea>
+      <span *ngIf="description.invalid && description.touched" style="color: red;">min of 10 characters and max of 30 characters</span>
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlInput4" class="form-label">Status</label>
+      <select name="status" #status="ngModel" required class="form-select" aria-label="Default select example" ngModel>
+        <option>Open this select menu</option>
+        <option *ngFor="let status of statuses" [value]="status">{{status | titlecase}}</option>
+      </select>
+      <span *ngIf="status.invalid && status.touched" style="color: red;">status is required</span>
+    </div>
+    <div class="mb-3">
+      <label for="timeInput">Time</label>
+      <input class="form-control" name="time" ngModel #time="ngModel"  required type="date" id="timeInput" >
+      <span *ngIf="time.invalid && time.touched" style="color: red;">time is required</span>
+    </div>
+    <button type="submit" [disabled]="blogForm.invalid" class="btn btn-primary">Submit</button>
+  </form>
+
+  <h3 class="text-center mt-2">Todo List</h3>
+  <ul class="list-group w-100">
+    <li *ngFor="let task of tasks" class="list-group-item">{{task.name}}</li>
+  </ul>
+</div>
+
